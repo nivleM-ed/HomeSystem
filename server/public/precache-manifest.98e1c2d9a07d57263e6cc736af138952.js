@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "f575a04ebbb31b5798a4c54783e745a2",
-    "url": "/img/new_logo.png"
+    "revision": "44bf13a71a4db6e15913fe8af9296711",
+    "url": "/img/tim_80x80.png"
   },
   {
     "revision": "434a30e544e0f137efbee5881069f2b4",
@@ -32,32 +32,28 @@ self.__precacheManifest = [
     "url": "/img/vue-logo.png"
   },
   {
-    "revision": "152c274aee0ad344032e",
-    "url": "/js/app.51a5c271.js"
+    "revision": "e176591ca3dc028bc1b4",
+    "url": "/js/app.166b579b.js"
   },
   {
-    "revision": "3a72a99c806cbaf1ccc0025164ca5e54",
+    "revision": "131c5fe672f3a8fd5460c682e56e8ff0",
     "url": "/index.html"
   },
   {
-    "revision": "99e58416b89637502b40ac8350eed85a",
-    "url": "/img/faces/face-1.jpg"
+    "revision": "ce7a6b79aa55041f7ae36f6ce22231fe",
+    "url": "/img/faces/face-3.jpg"
   },
   {
     "revision": "d32124138c76f970635a5db21b6e8c86",
     "url": "/favicon.png"
   },
   {
-    "revision": "d32124138c76f970635a5db21b6e8c86",
-    "url": "/img/chicken.png"
-  },
-  {
-    "revision": "a9615bac158705203261e8348f574cc8",
-    "url": "/img/default-avatar.png"
-  },
-  {
     "revision": "a9615bac158705203261e8348f574cc8",
     "url": "/img/faces/face-0.jpg"
+  },
+  {
+    "revision": "d32124138c76f970635a5db21b6e8c86",
+    "url": "/img/chicken.png"
   },
   {
     "revision": "4ab22eca4053c14a34e4bdb6390deae9",
@@ -68,12 +64,16 @@ self.__precacheManifest = [
     "url": "/img/faces/face-6.jpg"
   },
   {
-    "revision": "996d8248f580f8e26e6c45c67da9b5a6",
-    "url": "/img/favicon-bk.png"
-  },
-  {
     "revision": "129fb6ee5e0a90095dfba15b6f15c324",
     "url": "/img/favicon-bk.ico"
+  },
+  {
+    "revision": "a9615bac158705203261e8348f574cc8",
+    "url": "/img/default-avatar.png"
+  },
+  {
+    "revision": "996d8248f580f8e26e6c45c67da9b5a6",
+    "url": "/img/favicon-bk.png"
   },
   {
     "revision": "d32124138c76f970635a5db21b6e8c86",
@@ -88,12 +88,12 @@ self.__precacheManifest = [
     "url": "/img/mask.png"
   },
   {
-    "revision": "ae42fa524981a56f3f289447cff36eb1",
-    "url": "/img/nucleo-icons.ae42fa52.svg"
+    "revision": "f575a04ebbb31b5798a4c54783e745a2",
+    "url": "/img/new_logo.png"
   },
   {
-    "revision": "44bf13a71a4db6e15913fe8af9296711",
-    "url": "/img/tim_80x80.png"
+    "revision": "ae42fa524981a56f3f289447cff36eb1",
+    "url": "/img/nucleo-icons.ae42fa52.svg"
   },
   {
     "revision": "b0dc05d015e91e7d28d79cd0056fe555",
@@ -108,20 +108,20 @@ self.__precacheManifest = [
     "url": "/img/uploads/1582202906547-nasiLemak.png"
   },
   {
-    "revision": "a782c39b9e76a9566a03e94a7589a7b3",
-    "url": "/img/updateRecipe.png"
-  },
-  {
-    "revision": "ce7a6b79aa55041f7ae36f6ce22231fe",
-    "url": "/img/faces/face-3.jpg"
-  },
-  {
     "revision": "0e953b1ea6d6e3addd7210e9c7c420a7",
     "url": "/img/faces/face-2.jpg"
   },
   {
+    "revision": "a782c39b9e76a9566a03e94a7589a7b3",
+    "url": "/img/updateRecipe.png"
+  },
+  {
     "revision": "0b68eb8f1cde1fc9987a9196df05b96a",
     "url": "/img/faces/face-4.jpg"
+  },
+  {
+    "revision": "99e58416b89637502b40ac8350eed85a",
+    "url": "/img/faces/face-1.jpg"
   },
   {
     "revision": "bf1684a30a86ba1b222aab3acff16356",
@@ -160,6 +160,10 @@ self.__precacheManifest = [
     "url": "/img/addRecipe.PNG"
   },
   {
+    "revision": "8d990eada751046f1273a64defdd2bc5",
+    "url": "/img/patience_20200222.png"
+  },
+  {
     "revision": "6be21e8a1b7d63048728851c6003e189",
     "url": "/img/sidebar-1.jpg"
   },
@@ -168,8 +172,8 @@ self.__precacheManifest = [
     "url": "/css/chunk-vendors.6bc0e0df.css"
   },
   {
-    "revision": "152c274aee0ad344032e",
-    "url": "/css/app.818238de.css"
+    "revision": "e176591ca3dc028bc1b4",
+    "url": "/css/app.cd394257.css"
   },
   {
     "revision": "be74132f42ae1d3502f9a9b9fff68ac1",

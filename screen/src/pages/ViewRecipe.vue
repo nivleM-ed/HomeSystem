@@ -13,49 +13,91 @@
     </div>
     <div v-else>
       <form>
-        <div class="row ml-2">
-          <div class="col-8">
-            <div class="row">
-              <h2 slot="header" class="card-title">{{ recipe.title }}</h2>
-            </div>
-            <div class="row mt-3">
-              {{ recipe.description }}
-            </div>
-            <div class="row">
-              <card class="mt-3">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <slot name="columns">
-                        <tr>
-                          <th>Ingredient</th>
-                          <th>Quantity</th>
-                          <th>Type</th>
-                        </tr>
-                      </slot>
-                    </thead>
-                    <tbody>
-                      <tr v-for="item in recipe.ingredients" :key="item">
-                        <slot :row="item">
-                          <td>{{ item.ingredient }}</td>
-                          <td>{{ item.quantity }}</td>
-                          <td>{{ item.quantity_type }}</td>
+        <div v-if="!isMobile()">
+          <div class="row ml-2">
+            <div class="col-8">
+              <div class="row">
+                <h2 class="card-title">{{ recipe.title }}</h2>
+              </div>
+              <div class="row mt-3">
+                {{ recipe.description }}
+              </div>
+              <div class="row">
+                <card class="mt-3">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <slot name="columns">
+                          <tr>
+                            <th>Ingredient</th>
+                            <th>Quantity</th>
+                            <th>Type</th>
+                          </tr>
                         </slot>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </card>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in recipe.ingredients" :key="item">
+                          <slot :row="item">
+                            <td>{{ item.ingredient }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.quantity_type }}</td>
+                          </slot>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </card>
+              </div>
+            </div>
+            <div class="col-4" style="max-width: 800px" v-if="recipe.pic_path">
+              <expendable-image
+                slot="image"
+                :src="'img/uploads/' + recipe.pic_path"
+                alt="pic_path"
+                class="text-center border border-dark rounded p-2"
+              />
             </div>
           </div>
-          <div class="col-4" style="max-width: 800px" v-if="recipe.pic_path">
+        </div>
+        <div v-else>
+          <div class="row p-2">
+            <h2 class="card-title">{{ recipe.title }}</h2>
+          </div>
+          <div class="row mt-3 p-2">
+            {{ recipe.description }}
+          </div>
+          <div class="row" style="max-width: 800px" v-if="recipe.pic_path">
             <expendable-image
               slot="image"
               :src="'img/uploads/' + recipe.pic_path"
               alt="pic_path"
-              class="text-center border border-dark rounded p-2"
+              class="text-center p-2"
             />
           </div>
+          <card class="mt-3">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <slot name="columns">
+                    <tr>
+                      <th>Ingredient</th>
+                      <th>Quantity</th>
+                      <th>Type</th>
+                    </tr>
+                  </slot>
+                </thead>
+                <tbody>
+                  <tr v-for="item in recipe.ingredients" :key="item">
+                    <slot :row="item">
+                      <td>{{ item.ingredient }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.quantity_type }}</td>
+                    </slot>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </card>
         </div>
 
         <card class="mt-3">
@@ -81,7 +123,7 @@
           </div>
         </card>
 
-        <div class="text-center">
+        <div class="text-center" v-if="!isMobile()">
           <button
             type="submit"
             class="btn btn-warning btn-fill float-right"
@@ -89,6 +131,16 @@
           >
             Update Recipe
           </button>
+        </div>
+        <button
+            type="submit"
+            class="btn btn-warning btn-fill float-right mr-2"
+            @click.prevent="$router.go(-1)"
+          >
+            Go back
+          </button>
+        <div class="stats mt-2" v-if="isMobile()">
+          Recipe update disabled in mobile
         </div>
         <div class="clearfix"></div>
       </form>
@@ -100,6 +152,7 @@ import Card from "src/components/Cards/Card.vue";
 import ExpendableImage from "src/components/ExpendableImage.vue";
 import recipeApi from "src/api/recipe_api.js";
 import recipeClass from "src/model/recipe_class.js";
+import utils from "src/api/utils.js";
 
 export default {
   components: {
@@ -130,6 +183,10 @@ export default {
     updateRecipe() {
       let path = "/main/dataentry_recipe?id=" + this.$route.query.id;
       this.$router.push(path);
+    },
+
+    isMobile() {
+      return utils.isMobile();
     }
   }
 };

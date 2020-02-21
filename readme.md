@@ -32,7 +32,12 @@ sequelize-cli db:migrate
 ```bash
 npm start
 ```
-6. Serve at **localhost:4874**. _If you are having any problem, you can contact me._
+6. Serve at **localhost:4874**. 
+
+**Username:** user
+/ **Password:** password
+
+_If you are having any problem, you can contact me._
 
 
 # A brief story (Just skip if you are too lazy to read)
@@ -90,8 +95,9 @@ Functionalities
 - [ ] Add and delete users
 - [ ] User profile page
 - [ ] Logs
-- [ ] Mobile-ready
+- [X] Mobile-ready
 - [ ] Less hard-code
+- [ ] Add recipe page (Mobile)
 
 # Credits
 - VueJs Template : [Light Bootstrap Dashboard](https://www.creative-tim.com/product/vue-light-bootstrap-dashboard)

@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <card>
+      <card v-if="!isMobile()">
         <h4 slot="header" class="card-title">Add Recipe</h4>
         <form>
           <div
@@ -103,13 +103,13 @@
                 <th>Quantity</th>
                 <th>Type</th>
               </tr>
-              <tr
-                v-for="(items, index) in item"
-                v-bind:key="index"
-                :id="index"
-              >
+              <tr v-for="(items, index) in item" v-bind:key="index" :id="index">
                 <td style="width: 50%">
-                  <base-input v-model="items.ingredient" :id="'ingredient_'+index" :ref="'ingredient_'+index"></base-input>
+                  <base-input
+                    v-model="items.ingredient"
+                    :id="'ingredient_' + index"
+                    :ref="'ingredient_' + index"
+                  ></base-input>
                 </td>
                 <td style="width: 10%">
                   <base-input v-model="items.quantity"></base-input>
@@ -167,7 +167,8 @@
                     placeholder="Write step here"
                     rows="3"
                     v-model="methods.description"
-                    :id="'step_'+index" :ref="'step_'+index"
+                    :id="'step_' + index"
+                    :ref="'step_' + index"
                   ></textarea>
                 </td>
                 <td class="align-top px-2" style="width: 10%">
@@ -231,6 +232,10 @@
           <div class="clearfix"></div>
         </form>
       </card>
+      <card v-else>
+        <p>Adding recipes for mobile is still in development</p>
+        <img src="img/patience_20200222.png" alt="" class="img-fluid">
+      </card>
     </div>
   </div>
 </template>
@@ -240,6 +245,7 @@ import ExpendableImage from "src/components/ExpendableImage.vue";
 import recipeApi from "src/api/recipe_api.js";
 import recipeClass from "src/model/recipe_class.js";
 import { CONST } from "src/api/const.js";
+import utils from "src/api/utils.js";
 import axios from "axios";
 
 export default {
@@ -324,7 +330,7 @@ export default {
       let mandatory = await this.checkMandatory();
       if (!mandatory) {
         if (this.file) {
-          console.log('Uploading picture...')
+          console.log("Uploading picture...");
           try {
             let picture = await recipeApi.uploadPic(this.file);
             this.pic_path = picture.file.filename;
@@ -418,9 +424,8 @@ export default {
           this.man_desc = false;
         }
 
-        this.man_ing = await this.checkMandatoryId('ingredient');
-        this.man_step = await this.checkMandatoryId('step')
-  
+        this.man_ing = await this.checkMandatoryId("ingredient");
+        this.man_step = await this.checkMandatoryId("step");
       } catch (err) {
         this.error = err.message;
       }
@@ -434,26 +439,30 @@ export default {
 
     async checkMandatoryId(setid) {
       let token = false;
-      let length = parseInt(document.getElementById(setid).rows.length)-1
-      for (var i=0; i<length; i++) {
-        let id = setid + '_' + i;
+      let length = parseInt(document.getElementById(setid).rows.length) - 1;
+      for (var i = 0; i < length; i++) {
+        let id = setid + "_" + i;
         let el = document.getElementById(id);
-          if(el.value == null || el.value.split("") < 1) {
-            el.classList.add('border')
-            el.classList.add('border-danger')
-            token = true;
-          } else {
-            el.classList.remove('border')
-            el.classList.remove('border-danger')
-          }
+        if (el.value == null || el.value.split("") < 1) {
+          el.classList.add("border");
+          el.classList.add("border-danger");
+          token = true;
+        } else {
+          el.classList.remove("border");
+          el.classList.remove("border-danger");
         }
-      return token
+      }
+      return token;
     },
 
     onSelect() {
       const file = this.$refs.file.files[0];
       this.file = file;
       console.log(this.file);
+    },
+
+    isMobile() {
+      return utils.isMobile();
     }
   }
 };
