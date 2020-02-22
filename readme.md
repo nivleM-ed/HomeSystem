@@ -3,6 +3,8 @@
 A home system that *(to be honest with you)* only allows you to save and view recipe **FOR NOW**. 
 This project is build with PEVN stack.
 
+![](home_system.gif )
+
 ## Installation
 
 Installation is very simple for someone who has programming knowledge. Follow the step by step installtion guide.
