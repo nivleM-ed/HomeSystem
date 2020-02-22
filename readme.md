@@ -28,17 +28,30 @@ sequelize-cli db:migrate
 ```
 4. Part II: Setup database. After migrating, find **INITIALIZE.sql** file in **'.\home_system\database'** directory and run the file in the database.
 
-5. Open cmd in **'.\home_system\server'** and run.
+5. Delete _dist folder_ in **'.\home_system\screen'** and build the vue application.
+```bash
+npm run build
+```
+
+6. Replace the contains of the _dist folder_ into **'./home_system/server/public'**.
+
+7. Open cmd in **'.\home_system\server'** and run.
 ```bash
 npm start
 ```
-6. Serve at **localhost:4874**. 
+8. Serve at **localhost:4874**.  _Rebuild vue application if you cannot connect to the backend (npm run build in **'./home_system/screen'** and change **.env.production** accordingly.)_
 
 **Username:** user
 / **Password:** password
 
 _If you are having any problem, you can contact me._
 
+# Latest Updates
+
+- Users will be redirected to login paged after session expires (15 minutes) or if users directly access page without logging in.
+- Deleting a recipe will also delete the picture that was uploaded with it (I can't believe I did not put this earlier - talk about storage space).
+- Database config can now be updated at **'.\home_system\server\config\config.json'** instead of all over the code.
+- 
 
 # A brief story (Just skip if you are too lazy to read)
 This project is started so I can learn more about web programming and mainly to improve my front-end skill (cause my imagination sucks). For this project I used PEVN stack which is PostgreSQL as database, Express Js as backend and Vue Js as the frontend. 
@@ -54,7 +67,7 @@ Back-end is the place where I can have fun. For this part, I used [Passport Js](
 
 # Working with the code
 
-There is not much to the code in retrospect but I will explain some part that I think needs some explanation.
+There is not much to the code in retrospect but I will explain some part that I think needs some explanation if you decide to play around with the code.
 
 ### Back-end code
 ```bash
@@ -89,22 +102,30 @@ The command above will build the vue application
 This file is for you to set ENV variable values for the application. You can read more [here](https://cli.vuejs.org/guide/mode-and-env.html).
 If you want to change the connection to the backend, you can do so in the files above under VUE_APP_API_URL_. Take note that during building, vue will take values from the production file.
 
+### Explanation on the system
+
+First you will be greeted with a log in page. Once you log in, you will see the homepage. A cookie will set for 15 minutes to save the session. If you enter the log in page and still have the session active, it will redirect you to the homepage. In the homepage there are steps about saving, searching, viewing and deleting a recipe so I won't explain it here. All in all, I believe everything is very straight foward.
+
 # Things to improve on
 
-Functionalities
 - [ ] Add and delete users
 - [ ] User profile page
 - [ ] Logs
 - [X] Mobile-ready
 - [ ] Less hard-code
-- [ ] Add recipe page (Mobile)
+- [ ] Add recipe data entry page (Mobile)
+- [ ] More dynamic code
 
 # Credits
 - VueJs Template : [Light Bootstrap Dashboard](https://www.creative-tim.com/product/vue-light-bootstrap-dashboard)
 - StackOverflow: [StackOverflow](https://stackoverflow.com/)
 - Massive Online Documentation: [Google](www.google.com)
 
-# Contact
+# Other projects
+
+- [autosettergetterjs](https://github.com/nivleM-ed/autosettergetterjs) - It's available on VSCode (Search for nivlem.autosettergetterjs)
+
+# Contact 
 Email - melvinedward98@gmail.com
 
 Phone - [999](seriouslydontcallthisnumber)

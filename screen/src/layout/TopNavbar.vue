@@ -107,6 +107,7 @@ export default {
     async logout() {
       try {
         const logout = await userApi.logout();
+        
         this.$router.push("/");
       } catch (error) {
         this.error = err.message

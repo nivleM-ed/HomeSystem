@@ -1,10 +1,10 @@
 let createError = require('http-errors');
 
 exports.isLoggedIn = function (req, res, next) {
-
     try {
-        if (req.user)
+        if (req.user) {
             next();
+        }
         else {
             res.send({
                 err: "notLoggedIn"

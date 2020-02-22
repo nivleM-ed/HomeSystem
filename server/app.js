@@ -56,7 +56,7 @@ app.use(session({
   secret:"apassword",
   saveUninitialized:false,
   resave:false,
-  cookie:{secure:false, httpOnly:true, path: '/'} //maxAge:15 * 1000 * 3600
+  cookie:{secure:false, httpOnly:true, path: '/', maxAge:15 * 1000 * 60} 
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,8 +66,9 @@ app.use('/api/users', usersRouter);
 app.post('/api/upload', upload.single('file'), (req, res) => {
   res.json({file: req.file})
 })
-console.log("BETA V1.2.21")
+console.log(CONST.version)
 console.log("NODE_ENV: " + process.env.NODE_ENV)
+console.log('Database config:', CONST.dbPool)
 //For production
 if (process.env.NODE_ENV === 'production') {
   //Static folder of vue.js dist

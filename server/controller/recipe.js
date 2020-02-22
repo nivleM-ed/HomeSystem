@@ -1,5 +1,6 @@
 const db = require('../models/index');
 const CONST = require('../const');
+const fs = require('fs');
 
 exports.add = function (req, res, next) {
     return db.sequelize
@@ -39,17 +40,34 @@ exports.update = function (req, res, next) {
 }
 
 exports.delete = function (req, res, next) {
-    return db.sequelize
-        .query('SELECT * from F_RECIPE_DELETE(:a)', {
-            replacements: {
-                a: (req.body.recipeObj._in_param_1 == null ? null : req.body.recipeObj._in_param_1), //recipe_id
-            }
+    const runSP = (req, res, next) => {
+        return new Promise((resolve, reject) => {
+            return db.sequelize
+                .query('SELECT * from F_RECIPE_DELETE(:a)', {
+                    replacements: {
+                        a: (req.body.recipeObj._in_param_1 == null ? null : req.body.recipeObj._in_param_1), //recipe_id
+                    }
+                })
+                .then(data => {
+                    resolve(data[0]);
+                }).catch(err => {
+                    reject(500).send(err);
+                });
         })
-        .then(data => {
-            res.send(data[0]);
-        }).catch(err => {
-            res.status(500).send(err);
+    }
+
+    return runSP(req, res, next).then(data => {
+        if (data[0].remove_file != null) {
+            let link = './public/img/uploads/' + data[0].remove_file;
+            fs.unlinkSync(link);
+        }
+
+        res.send({
+            data
         });
+    }).catch(err => {
+        res.status(500).send(err);
+    })
 }
 
 exports.search = function (req, res, next) {

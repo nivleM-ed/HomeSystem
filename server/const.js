@@ -1,11 +1,8 @@
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config/config.json')[env];
 
 module.exports = {
     CONST_page_limit: 10,
-    dbPool: {
-        user: "postgres",
-        password: "password",
-        host: "127.0.0.1",
-        port: 5432,
-        database: "home_db"
-    }
+    version: 'BETA V1.2.22B',
+    dbPool: config
 };

@@ -105,6 +105,7 @@ import Card from "src/components/Cards/Card.vue";
 import LTable from "src/components/Table.vue";
 import Pagination from "src/components/Pagination.vue";
 import recipeApi from "src/api/recipe_api.js";
+import userApi from "src/api/users_api.js";
 import recipeClass from "src/model/recipe_class.js";
 import utils from "src/api/utils.js";
 
@@ -127,17 +128,27 @@ export default {
   },
   async created() {
     try {
-      // alert(process.env.VUE_APP_API_URL)
-      this.setClass();
-      this.recipeObj.in_page = this.page;
-      if (this.isMobile()) {
-        this.recipeObj.in_param_3 = 3;
+      let logToken = false;
+      let check_logged = await userApi.check_logged();
+      console.log("Check Login: ", check_logged);
+      if (check_logged.err) {
+        this.$router.push("/?err=notLogged");
+      } else {
+        logToken = true;
       }
-      const search = await recipeApi.search(this.recipeObj.toJson());
-      this.recipe = search.result[0].map(recipes => ({
-        ...recipes
-      }));
-      this.total_page = search.result[1];
+
+      if (logToken) {
+        this.setClass();
+        this.recipeObj.in_page = this.page;
+        if (this.isMobile()) {
+          this.recipeObj.in_param_3 = 3;
+        }
+        const search = await recipeApi.search(this.recipeObj.toJson());
+        this.recipe = search.result[0].map(recipes => ({
+          ...recipes
+        }));
+        this.total_page = search.result[1];
+      }
     } catch (err) {
       this.error = err.message;
     }

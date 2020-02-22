@@ -218,6 +218,7 @@ import ExpendableImage from "src/components/ExpendableImage.vue";
 
 import recipeApi from "src/api/recipe_api.js";
 import recipeClass from "src/model/recipe_class.js";
+import userApi from "src/api/users_api.js";
 import utils from "src/api/utils.js";
 
 export default {
@@ -233,12 +234,22 @@ export default {
       recipeObj: new recipeClass(),
       recipe: {},
       error: "",
-      togHide: false
+      togHide: true
     };
   },
   async created() {
     try {
-      this.recipeObj.in_page = 1;
+      let logToken = false;
+      let check_logged = await userApi.check_logged();
+      console.log("Check Login: ", check_logged);
+      if (check_logged.err) {
+        this.$router.push("/?err=notLogged");
+      } else {
+        logToken = true;
+      }
+
+      if(logToken) {
+        this.recipeObj.in_page = 1;
       if (this.isMobile()) {
         this.recipeObj.in_param_3 = 3;
       } else {
@@ -249,6 +260,7 @@ export default {
         ...recipes
       }));
       this.total_page = search.result[1];
+      }
     } catch (err) {
       this.error = err.message;
     }

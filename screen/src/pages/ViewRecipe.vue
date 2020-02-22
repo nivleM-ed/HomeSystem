@@ -133,12 +133,12 @@
           </button>
         </div>
         <button
-            type="submit"
-            class="btn btn-warning btn-fill float-right mr-2"
-            @click.prevent="$router.go(-1)"
-          >
-            Go back
-          </button>
+          type="submit"
+          class="btn btn-warning btn-fill float-right mr-2"
+          @click.prevent="$router.go(-1)"
+        >
+          Go back
+        </button>
         <div class="stats mt-2" v-if="isMobile()">
           Recipe update disabled in mobile
         </div>
@@ -152,6 +152,7 @@ import Card from "src/components/Cards/Card.vue";
 import ExpendableImage from "src/components/ExpendableImage.vue";
 import recipeApi from "src/api/recipe_api.js";
 import recipeClass from "src/model/recipe_class.js";
+import userApi from "src/api/users_api.js";
 import utils from "src/api/utils.js";
 
 export default {
@@ -170,11 +171,21 @@ export default {
   },
   async created() {
     try {
-      this.recipeObj.in_param_2 = this.$route.query.id;
-      this.recipeObj.in_page = 1;
-      const search = await recipeApi.search(this.recipeObj.toJson());
-      this.recipe = search.result[0][0];
-      // this.recipe.pic_path = "1582202643265-mePhoto2.png";
+      let logToken = false;
+      let check_logged = await userApi.check_logged();
+      console.log("Check Login: ", check_logged);
+      if (check_logged.err) {
+        this.$router.push("/?err=notLogged");
+      } else {
+        logToken = true;
+      }
+
+      if (logToken) {
+        this.recipeObj.in_param_2 = this.$route.query.id;
+        this.recipeObj.in_page = 1;
+        const search = await recipeApi.search(this.recipeObj.toJson());
+        this.recipe = search.result[0][0];
+      }
     } catch (err) {
       this.error = err.message;
     }

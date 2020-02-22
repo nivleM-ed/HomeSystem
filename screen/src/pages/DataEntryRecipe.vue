@@ -234,7 +234,7 @@
       </card>
       <card v-else>
         <p>Adding recipes for mobile is still in development</p>
-        <img src="img/patience_20200222.png" alt="" class="img-fluid">
+        <img src="img/patience_20200222.png" alt="" class="img-fluid" />
       </card>
     </div>
   </div>
@@ -244,6 +244,7 @@ import Card from "src/components/Cards/Card.vue";
 import ExpendableImage from "src/components/ExpendableImage.vue";
 import recipeApi from "src/api/recipe_api.js";
 import recipeClass from "src/model/recipe_class.js";
+import userApi from "src/api/users_api.js";
 import { CONST } from "src/api/const.js";
 import utils from "src/api/utils.js";
 import axios from "axios";
@@ -284,7 +285,17 @@ export default {
     };
   },
   async created() {
-    if (this.is_update) {
+    try {
+      let logToken = false;
+    let check_logged = await userApi.check_logged();
+    console.log("Check Login: ", check_logged);
+    if (check_logged.err) {
+      this.$router.push("/?err=notLogged");
+    } else {
+      logToken = true;
+    }
+
+    if (this.is_update && token) {
       try {
         this.recipeObj.in_param_2 = this.$route.query.id;
         this.recipeObj.in_page = 1;
@@ -298,6 +309,9 @@ export default {
       } catch (err) {
         this.error = err.message;
       }
+    }
+    } catch (err) {
+      this.error = err.message
     }
   },
   methods: {
@@ -388,17 +402,25 @@ export default {
     },
 
     async deleteRecipe() {
-      alert(
-        "This recipe will be deleted forever. Are you sure you want to proceed?"
-      );
+      let token = false;
+      if (
+        confirm(
+          "This recipe will be deleted forever. Are you sure you want to proceed?"
+        )
+      ) {
+        token = true;
+      }
+
       console.log("Deleting recipe...");
-      try {
-        this.recipeObj.in_param_1 = this.$route.query.id;
-        const del = await recipeApi.delete(this.recipeObj.toJson());
-        let nextPage = "/main/search_recipe";
-        this.$router.push(nextPage);
-      } catch (err) {
-        this.error = err.message;
+      if (token) {
+        try {
+          this.recipeObj.in_param_1 = this.$route.query.id;
+          const del = await recipeApi.delete(this.recipeObj.toJson());
+          let nextPage = "/main/search_recipe";
+          this.$router.push(nextPage);
+        } catch (err) {
+          this.error = err.message;
+        }
       }
     },
 
