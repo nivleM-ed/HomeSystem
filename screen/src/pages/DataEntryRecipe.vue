@@ -124,6 +124,7 @@
                       <option>Teaspoon/s</option>
                       <option>Tablespoon/s</option>
                       <option>Cup/s</option>
+                      <option>Oz</option>
                     </select>
                   </base-input>
                 </td>
@@ -295,7 +296,7 @@ export default {
       logToken = true;
     }
 
-    if (this.is_update && token) {
+    if (this.is_update) {
       try {
         this.recipeObj.in_param_2 = this.$route.query.id;
         this.recipeObj.in_page = 1;
