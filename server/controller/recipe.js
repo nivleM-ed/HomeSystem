@@ -71,6 +71,7 @@ exports.delete = function (req, res, next) {
 }
 
 exports.search = function (req, res, next) {
+    const pageLim = (req.body.recipeObj._in_param_3 == null ? parseInt(CONST.CONST_page_limit) : parseInt(req.body.recipeObj._in_param_3));
     const runSP = (req, res, next) => {
         return new Promise((resolve, reject) => {
             return db.sequelize
@@ -79,7 +80,7 @@ exports.search = function (req, res, next) {
                         a: (req.body.recipeObj._in_param_1 == null ? null : req.body.recipeObj._in_param_1),
                         b: (req.body.recipeObj._in_param_2 == null ? null : req.body.recipeObj._in_param_2),
                         c: parseInt(req.body.recipeObj._in_page) - 1,
-                        d: (req.body.recipeObj._in_param_3 == null ? parseInt(CONST.CONST_page_limit) : parseInt(req.body.recipeObj._in_param_3))
+                        d: pageLim
                     }
                 })
                 .then(data => {
@@ -91,7 +92,7 @@ exports.search = function (req, res, next) {
     }
 
     return runSP(req, res, next).then(data => {
-        let totalpage = (data[0] == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / CONST.CONST_page_limit));
+        let totalpage = (data[0] == null ? parseInt(1) : Math.ceil(parseInt(data[0].totalrecords) / pageLim));
         let result = [data, totalpage];
         res.send({
             result
